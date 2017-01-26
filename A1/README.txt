@@ -35,7 +35,7 @@ To run game with customize frame rate and speed,
 use command: ./snake FPS SPEED (where FPS and SPEED are ints, see note below)
 
     * Note: FPS supports range of 1-100
-            SPEED supports reange of 1-10
+            SPEED supports range of 1-10
 
 //..................................................................
 //....SSSSSS........................................................
