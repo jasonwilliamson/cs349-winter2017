@@ -22,8 +22,7 @@ Development environment not described: -1
 
 5/5 - The game allows for adjusting the speed of the snake through a command line argument, from 1-10, from slowest to fastest [3]. Not specifying the speed during launch should make the snake run with a reasonable default speed value [2]. 
 
-3/5 - Window size is set to 800x600 or something close [3] and should not be resizeable [2].
-Window is resizeable: -2
+5/5 - Window size is set to 800x600 or something close [3] and should not be resizeable [2].
 
 == Gameplay Requirements [40] ==
 
@@ -48,4 +47,4 @@ Window is resizeable: -2
 No enhancements.
 
 Total:
-87/100
+89/100
