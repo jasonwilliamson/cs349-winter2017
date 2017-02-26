@@ -24,6 +24,7 @@ public class SliderView extends JComponent implements Observer {
         playBtn = new JButton("Play");
         playBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
+                disableSliderButtons();
                 animateDrawing();
             }
         });
@@ -48,7 +49,7 @@ public class SliderView extends JComponent implements Observer {
             public void actionPerformed(ActionEvent e){
                 undoSlider.setValue(undoSlider.getMaximum());
                 model.forceRepaint();
-                 System.out.println("@@@");
+                 //System.out.println("@@@");
             }
         });
 
@@ -60,8 +61,22 @@ public class SliderView extends JComponent implements Observer {
         model.addObserver(this);
     }
 
+    private void disableSliderButtons(){
+        playBtn.setEnabled(false);
+        startBtn.setEnabled(false);
+        endBtn.setEnabled(false);
+    }
+
+    private void enableSliderButtons(){
+        playBtn.setEnabled(true);
+        startBtn.setEnabled(true);
+        endBtn.setEnabled(true);
+    }
+
     private void animateDrawing(){
         //for each line animated its drawing , make one second long...
+        animating = true;
+        undoSlider.setEnabled(false);
         undoSlider.setValue(0);
         int valPerLine = (100/model.getLineCount());
         int tick = 1000/ valPerLine;
@@ -72,6 +87,9 @@ public class SliderView extends JComponent implements Observer {
                      undoSlider.setValue(undoSlider.getValue() + 1);
                 } else {
                     ((Timer) e.getSource()).stop();
+                    animating = false;
+                    enableSliderButtons();
+                    undoSlider.setEnabled(true);
                 }
             }
         });
@@ -87,19 +105,16 @@ public class SliderView extends JComponent implements Observer {
         System.out.println("lineCount: " + lineCount);
 
         if(0 == lineCount){
-            playBtn.setEnabled(false);
-            startBtn.setEnabled(false);
-            endBtn.setEnabled(false);
+            disableSliderButtons();
             undoSlider.setEnabled(false);
             this.undoSlider.setPaintTicks(false);
-        }else{
+        }else if(!animating){
             this.undoSlider.setMajorTickSpacing(100/lineCount);
             this.undoSlider.setMinorTickSpacing((100/lineCount)/10);
-            playBtn.setEnabled(true);
-            startBtn.setEnabled(true);
-            endBtn.setEnabled(true);
+            enableSliderButtons();
         }
 
+        if(!animating){
         if (lineCount > 0 && !undoSlider.isEnabled()){
             this.undoSlider.setEnabled(true);
             this.undoSlider.setMinimum(0);
@@ -116,6 +131,7 @@ public class SliderView extends JComponent implements Observer {
             this.undoSlider.setMinorTickSpacing((100/lineCount)/10);
             this.undoSlider.setValue(100);
             model.resetSliderAdjusted();
+        }
         }
     }
 
