@@ -7,7 +7,7 @@
 //
 
 Build environment for A2.
-Coding done with Visual Studio Code.
+Java Version 8 update 121
 For macOS version 10.12.3
 Tested on linux student environment
 
