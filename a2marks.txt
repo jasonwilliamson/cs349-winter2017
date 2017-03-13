@@ -1,0 +1,44 @@
+CS349 A2 Marking Scheme
+Marker: Jeremy <j3hartma@uwaterloo.ca>
+
+Marks in [] are the total marks for an item.
+Marks in () are used to denote the breakdown of marks for that particular item.
+
+Deliverables (5%)
+[5/5] Typing "make run" compiles and launches the application.
+
+UI Layout Requirements (20%)
+[2/2] Menu bar exists, with a File menu containing options for New, Save, Load, Exit.
+[3/3] Playback controls, Play, Start, End, and a timeline slider, are presented.
+[5/5] Colour palette (2) and stroke thickness (2) options are presented graphically. This should include a color picker (1).
+[5/5] Dynamic layout instead of fixed layout is used. Controls including colour chooser, stroke thickness selector, and  timeline should expand to fill available space (3). Panels should expand either horizontally or vertically as appropriate for the panel being displayed (2).
+[5] The canvas should resize to fill the remaining space (3). Uniform spacing is not enforced. The canvas contents should scale with the canvas (2).
+
+Functional Requirements (55%)
+[3/3] File-New can be used to create a new canvas.
+[3/3] File-Exit closes the application.
+[8/8] File-Save and File-Load allow the user to save (3) and load (3). This should use a JFileChooser dialog, with a file extension used for the filename (this can be any file extension that the user chooses) (2).
+[5/5] File menu operations will prompt the user before closing or discarding a doodle (i.e. if the user attempts to load before saving your current doodle, they will be asked to save) (2 each for Load, Exit, New up to 5 marks)
+
+[5/5] Clicking on the color palette will change the current color (1); Clicking on a line width with change the current line width (1). Both are reflected in the UI (2 each up to 3 marks )
+[4/4] A custom color picker dialog can also be used to select the current color (2). This is reflected in the UI, so that the currenty color is indicated. (2)
+
+[5/5] A stroke can be completed by mouse down, drag, and mouse up. (1) Each time a stroke is completed, a new tick is added to the timeline (2) and the stroke is saved (2).
+[4/4] Any new stroke will have the correct colour (2) and width (2) depending on which options are selected.
+
+[6/10] Clicking Play will start drawing the canvas (2), from the current slider position (4). Strokes are smoothly animated in the correct order, with multiple points being drawn for each stroke (represented as sub-ticks). (2) Clicking Start and End navigates to the corresponding tick in the timeline (2). Clicking Play when the slider is at the end can do nothing, or rewing to the start automatically; either behaviour is perfectly fine. Playback only needs to move forward.
+NOTE: (4) Clicking play should start from current slider position.
+[4/4] Dragging the slider shows the  animation both forward (2) and backward (2). The animation should smoothly display both strokes and points within a stroke.
+[4/4] Creating a new stroke will replace all subsequent strokes on the scrubber with the new stroke. (4)
+
+Program Architecture (10%)
+[5/5] Models are clearly defined. (2) At least 2 views used. (3)
+[5/5] Models and Views/Controllers are bound using the observer pattern (either the Java classes/interfaces, or custom classes).
+
+
+Enhancement (10%)
+[0/10] An enhancement is described in the README (2) and implemented correctly (8).
+NOTE: (10) No enhancements presented.
+
+
+Total: 86/100
