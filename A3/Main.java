@@ -35,7 +35,7 @@ public class Main {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// add scene graph to the canvas
-		Canvas canvas = new Canvas();
+		final Canvas canvas = new Canvas();
 		
 
 		JMenuBar mb = new JMenuBar();
