@@ -90,36 +90,19 @@ public class Main {
 
 		//Create different parts
 		EllipseSprite bodySprite = new EllipseSprite(150, 300, BODY);
-		//bodySprite.setBodyPart(BODY);
 		EllipseSprite headSprite = new EllipseSprite(80, 95, HEAD, bodySprite);
-		//headSprite.setBodyPart(HEAD);
 		EllipseSprite upperRightArm = new EllipseSprite(150, 45, URA, bodySprite);
-		//upperRightArm.setBodyPart(URA);
 		EllipseSprite lowerRightArm = new EllipseSprite(100, 35, LRA, upperRightArm);
-		//lowerRightArm.setBodyPart(LRA);
 		EllipseSprite rightHand = new EllipseSprite(55, 25, RH, lowerRightArm);
-		//rightHand.setBodyPart(RH);
 		EllipseSprite upperLeftArm = new EllipseSprite(150, 45, ULA, bodySprite);
-		//upperLeftArm.setBodyPart(ULA);
 		EllipseSprite lowerLeftArm = new EllipseSprite(100, 35, LLA, upperLeftArm);
-		//lowerLeftArm.setBodyPart();
 		EllipseSprite leftHand = new EllipseSprite(55, 25, LH, lowerLeftArm);
-		//leftHand.setBodyPart(LH);
-		//EllipseSprite upperRightLeg = new EllipseSprite(55, 150, URL, bodySprite);
 		EllipseSprite upperRightLeg = new EllipseSprite(150, 55, URL, bodySprite);
-		//upperRightLeg.setBodyPart(URL);
-		//EllipseSprite lowerRightLeg = new EllipseSprite(45, 110, LRL, upperRightLeg);
 		EllipseSprite lowerRightLeg = new EllipseSprite(110, 45, LRL, upperRightLeg);
-		//lowerRightLeg.setBodyPart(LRL);
 		EllipseSprite rightFoot = new EllipseSprite(75, 35, RF, lowerRightLeg);
-		//rightFoot.setBodyPart(RF);
 		EllipseSprite upperLeftLeg = new EllipseSprite(150, 55, ULL, bodySprite);
-		//upperLeftLeg.setBodyPart(ULL);
 		EllipseSprite lowerLeftLeg = new EllipseSprite(110, 45, LLL, upperLeftLeg);
-		//lowerLeftLeg.setBodyPart(LLL);
 		EllipseSprite leftFoot = new EllipseSprite(75, 35, LF, lowerLeftLeg);
-		//leftFoot.setBodyPart(LF);
-	///	Sprite firstSprite = new EllipseSprite(80, 50);
 		
 
 		bodySprite.transform(AffineTransform.getTranslateInstance((1280/2) - 75, 150));
@@ -134,15 +117,12 @@ public class Main {
 		leftHand.transform(AffineTransform.getTranslateInstance(100, 3));
 		
 		upperRightLeg.transform(AffineTransform.getTranslateInstance(40,250));
-		//lowerRightLeg.transform(AffineTransform.getTranslateInstance(5, 148));
 		lowerRightLeg.transform(AffineTransform.getTranslateInstance(148, 5));
 		rightFoot.transform(AffineTransform.getTranslateInstance(108, 5));
 
 		upperLeftLeg.transform(AffineTransform.getTranslateInstance(112,250));
 		lowerLeftLeg.transform(AffineTransform.getTranslateInstance(147, 5));
 		leftFoot.transform(AffineTransform.getTranslateInstance(108, 5));
-		// define them based on relative, successive transformations
-	///	firstSprite.transform(AffineTransform.getTranslateInstance(100, 100));
 		
 		
 		// build scene graph
@@ -160,14 +140,12 @@ public class Main {
 		upperLeftLeg.addChild(lowerLeftLeg);
 		lowerLeftLeg.addChild(leftFoot);
 
-		//width/2, 0
 		upperRightLeg.transform(AffineTransform.getRotateInstance(Math.toRadians(90.0), 0, upperRightLeg.height / 2));
 		rightFoot.transform(AffineTransform.getRotateInstance(Math.toRadians(90.0), 0, rightFoot.height / 2));
 
 		upperLeftLeg.transform(AffineTransform.getRotateInstance(Math.toRadians(90.0), 0, upperLeftLeg.height / 2));
 		leftFoot.transform(AffineTransform.getRotateInstance(Math.toRadians(-90.0), 0, leftFoot.height / 2));
 		// return root of the tree
-	///	return firstSprite;
 	return bodySprite;
 	}
 

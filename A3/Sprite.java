@@ -44,7 +44,7 @@ public abstract class Sprite {
     private final String LF = "lf";       //LeftFoot
 
     public Sprite parent = null;                               // Pointer to our parent
-    private Vector<Sprite> children = new Vector<Sprite>();     // Holds all of our children
+    public Vector<Sprite> children = new Vector<Sprite>();     // Holds all of our children
     private AffineTransform transform = new AffineTransform();  // Our transformation matrix
     protected Point2D lastPoint = null;                         // Last mouse point
     protected InteractionMode interactionMode = InteractionMode.IDLE;    // current state
@@ -56,11 +56,10 @@ public abstract class Sprite {
     private double fixedY;
     private boolean dampen = true;
     private double last_td = 0.0;
-    private final double SCALE_MAX = 3.0;
-    private final double SCALE_MIN = 1.0;
-    private double lastDY = 0.0;
-    private double lastDX = 0.0;
-    private boolean first = true;
+    private final double SCALE_MAX = 1.33;
+    private final double SCALE_MIN = .67;
+    private double lastTotalDiff = 0.0;
+    private boolean increasing = true;
     
 
     public Sprite() {
@@ -93,22 +92,17 @@ public abstract class Sprite {
      * been tested to ensure the mouse point is within our sprite.
      */
     protected void handleMouseDownEvent(MouseEvent e) {
-        if(first){
-             transform.translate(0.0, 0.0);
-             first = false;
-             System.out.println("HELLO: First");
-        }
 
         lastPoint = e.getPoint();
         if (e.getButton() == MouseEvent.BUTTON1) {
             EllipseSprite el = (EllipseSprite) this; // Interaction based on what object selected 
-            System.out.println("HELLO: " + el.getBodyPart());
+            //System.out.println("HELLO: " + el.getBodyPart());
             if(BODY == el.getBodyPart()){
-                System.out.println("DRAG");
+                //System.out.println("DRAG");
                 interactionMode = InteractionMode.DRAGGING;  
             }else{
                 last_td = 0.0;
-                System.out.println("000000000000");
+                //System.out.println("000000000000");
                 dampen = true;
                 AffineTransform at = el.getLocalTransform();
                 double r = Math.atan2(at.getShearY(), at.getScaleY());   //current rotation
@@ -121,37 +115,37 @@ public abstract class Sprite {
                 while(eParent != null){ //Push parents onto stack
                     lifo.push( eParent );
                     el = eParent;
-                    System.out.println("CREATE STACK: " + el.getBodyPart());
+                    //System.out.println("CREATE STACK: " + el.getBodyPart());
                     eParent = el.parentSprite;
                     
                 }
                 double degreeCounter = 0.0; //reset to zero
                 while( !lifo.empty() ){
                     el = (EllipseSprite) lifo.pop();
-                    System.out.println("Current part " + el.getBodyPart());
+                    //System.out.println("Current part " + el.getBodyPart());
                     AffineTransform lt = el.getLocalTransform();
                     if(el.getBodyPart() == BODY){ //BODY NEVER ROTATES .. add direct translation always
                         translateX += lt.getTranslateX();
                         translateY += lt.getTranslateY();
-                        System.out.println("body x:" + lt.getTranslateX() + " y: " + lt.getTranslateY());
+                        //System.out.println("body x:" + lt.getTranslateX() + " y: " + lt.getTranslateY());
                     }else if((el.getBodyPart() == ULA) || (el.getBodyPart() == URA) || (el.getBodyPart() == URL) ||
                             (el.getBodyPart() == ULL) || (el.getBodyPart() == HEAD)){
                         //Just add straight translation from body and rotaion point .. no need to consider rotation element
                         Point rotationPoint = el.getRotationPoint();
-                        System.out.println("Calculating rotation of " + el.getBodyPart() + " : " + el.getRotationValue());
-                        System.out.println("CALC TRANS " + el.getBodyPart() + " x: " + el.translatedX + " y: " + el.translatedY);
+                        //System.out.println("Calculating rotation of " + el.getBodyPart() + " : " + el.getRotationValue());
+                        //System.out.println("CALC TRANS " + el.getBodyPart() + " x: " + el.translatedX + " y: " + el.translatedY);
                         translateX += el.translatedX + rotationPoint.x;
                         translateY += el.translatedY + rotationPoint.y;
                     }else{
-                        System.out.println("Calculating rotation of " + el.getBodyPart() + " : " + el.getRotationValue());
+                        //System.out.println("Calculating rotation of " + el.getBodyPart() + " : " + el.getRotationValue());
                         EllipseSprite par = (EllipseSprite) el.parent;
                         double curDegrees = par.getRotationValue();
                         double rotRadians = Math.toRadians(curDegrees);
-                        System.out.println(par.getBodyPart() + " hyp: " + par.hyp);
+                        //System.out.println(par.getBodyPart() + " hyp: " + par.hyp);
                         double xtrans =  (Math.cos(rotRadians) * par.hyp);
                         double ytrans =  (Math.sin(rotRadians) * par.hyp);
 
-                        System.out.println(el.getBodyPart()+ " x: " + xtrans + " y: " + ytrans);
+                        //System.out.println(el.getBodyPart()+ " x: " + xtrans + " y: " + ytrans);
                         translateX += xtrans;
                         translateY += ytrans;
   
@@ -162,7 +156,7 @@ public abstract class Sprite {
                     fixedY = translateY;
                     translateX = translateY = 0;
             
-                    System.out.println("fixedX " + fixedX + " fixedY " + fixedY);
+                    //System.out.println("fixedX " + fixedX + " fixedY " + fixedY);
                     interactionMode = InteractionMode.ROTATING;
                 }
                 
@@ -189,13 +183,13 @@ public abstract class Sprite {
                 ; // no-op (shouldn't get here)
                 break;
             case DRAGGING:
-                System.out.println("DRAGGING ");
+                //System.out.println("DRAGGING ");
                 double x_diff = newPoint.getX() - oldPoint.getX();
                 double y_diff = newPoint.getY() - oldPoint.getY();
                 transform.translate(x_diff, y_diff);
                 break;
             case ROTATING:
-                System.out.println("-------------------------");
+                //System.out.println("-------------------------");
                 EllipseSprite el = (EllipseSprite) this;
                 Point rotationPoint = el.getRotationPoint(); //objects rotation point or pivot point ..
                 
@@ -203,18 +197,30 @@ public abstract class Sprite {
                 
                 double dx = newPoint.getX() - fixedX; //colculate distance between rotation point and mouse 
                 double dy = newPoint.getY() - fixedY;
-                if(dampen){
-                    lastDX = dx;
-                    lastDY = dy;
+                double newDX = Math.abs(dx);
+                double newDY = Math.abs(dy);
+                double totalDiff = newDX + newDY;
+
+                //System.out.println("totalDiff: " + totalDiff + " lastTotalDiff " + lastTotalDiff);
+                if((totalDiff - lastTotalDiff) > 0){
+                    increasing = true;
+                }else{
+                    increasing = false;
+                    //System.out.println("decresing ");
                 }
-                System.out.println("mouse: x: " + newPoint.getX() + " y: " + newPoint.getY());
-                System.out.println("FixedPoint: x: " + fixedX + " y: " + fixedY);
-                System.out.println("dx: " + dx + " dy: " + dy); 
+                lastTotalDiff = totalDiff;
+                
+                
+
+
+                //System.out.println("mouse: x: " + newPoint.getX() + " y: " + newPoint.getY());
+                //System.out.println("FixedPoint: x: " + fixedX + " y: " + fixedY);
+                //System.out.println("dx: " + dx + " dy: " + dy); 
                 double theta = Math.atan2(dy,dx); //Distance here is effecting the rotation values from atan2
                                                   //Rotation on child lim is over exagerated 
                 double degrees = Math.toDegrees(theta); //Degrees becomes too large on child objects with transforms on parents 
-                System.out.println("??Determined Degree: " + degrees);
-                System.out.println("el.getRotationValue() " + el.getRotationValue());
+                //System.out.println("??Determined Degree: " + degrees);
+                //System.out.println("el.getRotationValue() " + el.getRotationValue());
                
 
                 double difference = degrees - el.getRotationValue();
@@ -225,10 +231,10 @@ public abstract class Sprite {
                 }
                
                 double total_rotation = Math.toDegrees(Math.atan2(at.getShearY(), at.getScaleY()));
-                System.out.println("total rotation " + total_rotation);
+                //System.out.println("total rotation " + total_rotation);
 
                 
-                System.out.println("increment by degree " + difference);
+                //System.out.println("increment by degree " + difference);
                 if (dampen){ 
                     difference *= .01; 
                     dampen = false;
@@ -257,19 +263,69 @@ public abstract class Sprite {
                 el.setRotationValue(degrees);
                 theta = Math.toRadians(difference); //new angle of rotation 
                 
-                System.out.println("-------------------------");
+                //System.out.println("-------------------------");
                 
-                //transform.scale(1.1,1.1);
+                if((LLL == part) || (LRL == part)){
+                    if(increasing){
+                        if(!isMaxScaled(el)){
+                            transform.scale(1.003, 1.003);
+                            EllipseSprite cel = (EllipseSprite) el.children.get(0);
+                            cel.transform(AffineTransform.getScaleInstance(.997,.997));
+                        }
+                    }else{
+                        if(!isMinScaled(el)){
+                            // System.out.println("isMIn: " + isMinScaled(el));
+                            transform.scale(.997,.997);
+                            EllipseSprite cel = (EllipseSprite) el.children.get(0);
+                            cel.transform(AffineTransform.getScaleInstance(1.003, 1.003));
+                        }
+                    }
+                }else if((ULL == part) || ( URL== part)){
+                    if(increasing){
+                        if(!isMaxScaled(el)){
+                            transform.scale(1.003, 1.003);
+                            EllipseSprite cel = (EllipseSprite) el.children.get(0); //LLL or LRL
+                            EllipseSprite ccel = (EllipseSprite) cel.children.get(0);
+                            ccel.transform(AffineTransform.getScaleInstance(.997,.997));
+                        }
+                    }else{
+                        //System.out.println("Scale: x: " + at.getScaleX() + " y: " + at.getScaleY()); 
+                        //System.out.println("isMIn: " + isMinScaled(el));
+                        if(!isMinScaled(el)){
+                            
+                            transform.scale(.997,.997);
+                            EllipseSprite cel = (EllipseSprite) el.children.get(0); //LLL or LRL
+                            EllipseSprite ccel = (EllipseSprite) cel.children.get(0);
+                            ccel.transform(AffineTransform.getScaleInstance(1.003, 1.003));
+                        }
+                    }
+                    
+                }
+                
+                //System.out.println("Scale: x: " + at.getScaleX() + " y: " + at.getScaleY()); 
                 transform.rotate(theta, rotationPoint.x, rotationPoint.y);
                 
-                break;
-            case SCALING:
-                ; // Provide scaling code here
                 break;
                 
         }
         // Save our last point, if it's needed next time around
         lastPoint = e.getPoint();
+    }
+
+    private boolean isMaxScaled(EllipseSprite el){
+        AffineTransform at = el.getLocalTransform();
+        if(SCALE_MAX > Math.abs(at.getScaleX())){
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isMinScaled(EllipseSprite el){
+        AffineTransform at = el.getLocalTransform();
+        if(SCALE_MIN < Math.abs(at.getScaleX())){
+            return false;
+        }
+        return true;
     }
     
     protected void handleMouseUp(MouseEvent e) {
@@ -326,7 +382,7 @@ public abstract class Sprite {
      * Performs an arbitrary transform on this sprite
      */
     public void transform(AffineTransform t) {
-        System.out.println("CONCAT");
+        //System.out.println("CONCAT");
         transform.concatenate(t);
     }
 

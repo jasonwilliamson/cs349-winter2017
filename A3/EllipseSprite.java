@@ -86,7 +86,7 @@ import java.awt.Point;
             case HEAD:
                 translatedX = 30.0;
                 translatedY = -95.0;
-                System.out.println("HEAD");
+                //System.out.println("HEAD");
                 pin = new Ellipse2D.Double(width/2, height, 2, 2);
                 setRotationPoint(new Point(width/2, height));
                 break;
