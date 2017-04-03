@@ -1,0 +1,62 @@
+CS349 A3 Marking Scheme
+Marker: Dallas Fraser
+Email: d6fraser@uwaterloo.ca
+
+Marks in [] are the total marks for an item.
+Marks in () are used to denote the breakdown of marks for that particular item.
+
+Deliverables (5%)
+[5/5] Typing "make run" compiles and launches the application (5).
+
+Basic functionality (20%)
+[5/5] There exists a menu bar at the top of the window (5).
+[5/5] The menu bar contains the menu "File" (1), with the items "Reset" and
+      "Quit" (2), each using the appropriate accelerator keys (2).
+[5/5] The "Reset" menu option resets the ragdoll's position entirely to the
+      default. (5)
+[5/5] A ragdoll is visible (2), and is assembled in the rough shape of the doll (3).
+
+Translation (15%)
+[5/5] The ragdoll can be translated (5).
+[5/5] The ragdoll can be translated with direct manipulation on the torso (3), with
+      movements that match the mouse's movement one-to-one (2).
+[5/5] When the ragdoll is translated by the torso, the child elements of the torso
+      are translated simultaneously (5).
+
+Rotation (20%)
+[5/5] All body parts of the ragdoll can be rotated (4), except for the torso, which
+      does not rotate (1).
+[5/5] The parts can be rotated with direct manipulation on the body part (3), with
+      rotations that match the mouse's rotation about the pivot one-to-one (2).
+[5/5] When the body parts are rotated, the child elements of the body part are
+      rotated simultaneously (5).
+[5/5] The appropriate body parts have limited rotation (3), relative to the
+      rotation of their parent element (2).
+
+Scaling (20%)
+[5/5] The legs of the ragdoll can be scaled (4), and no other body parts can be (1).
+[5/5] The legs can be scaled with direct manipulation (3), with scaling that matches
+      the mouse's distance from the pivot (2).
+[5/5] When the upper legs are scaled, the lower legs are scaled as well (4), but
+     the feet are not scaled (1).
+[5/5] The legs scale along their primary axis (3), even when the lower leg has been
+      rotated relative to the upper leg (2).
+
+Robustness (10%)
+[2/2] Grabbing a body part for direct manipulation does not cause the body part
+      to change at all until the mouse begins to move (2).
+[5/5] The movement of body parts is smooth while they're being directly
+      manipulated within constraints (5). (It is acceptable for the body part to
+      "pop" if you move past one constraint and back into range.)
+[3/3] When a body part is manipulated, the child elements of the body part are
+      also updated smoothly (3).
+
+
+Enhancements (15%)
+Textures:
+Did see any, the notes in the readme did not indicate an enhancements for the program
+105 - 15
+Total:
+[90/100]
+
+Note: Your total may be above 100 if a 15-mark enhancement is implemented.
