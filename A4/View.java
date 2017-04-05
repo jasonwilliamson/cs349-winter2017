@@ -316,6 +316,13 @@ public class View extends JFrame implements Observer, ActionListener, Adjustment
         }else if(SAVE.equals(cmd)){
             saveFile();
         }else if(LOAD.equals(cmd)){
+            if(!canvas.videoItems.isEmpty()){
+                int save = JOptionPane.showConfirmDialog(null, "Save changes to this file before overwriting?",
+                "Save", JOptionPane.YES_NO_OPTION);
+                if (save == JOptionPane.YES_OPTION){
+                    saveFile();
+                }
+            }
             loadFile();
         }
     }
