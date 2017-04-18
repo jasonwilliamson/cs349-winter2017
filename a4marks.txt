@@ -1,0 +1,77 @@
+CS349 A4 Marking Scheme
+Marker: Bahareh Sarrafzadeh - bsarrafz@uwaterloo.ca
+
+Marks in [] are the total marks for an item.
+Marks in () are used to denote the breakdown of marks for that particular item.
+
+Deliverables (10%)
+------------------
+[10/10] A README exists (2), and typing "make run" compiles and launches the application on the platform specified in the README (8).
+
+UI Layout Requirements (35%)
+----------------------------
+[10/10] Launching the application displays a window with a toolbar that has the following UI elements:
+- Grid/list view toggle button (2)
+- Search text field (2)
+- Search icon/button (2)
+- A save button (1)
+- A load button (1)
+- A five-star filter ratings bar (2)
+
+[5/5] Grid view layout: After executing a search, the application can be switched to a grid view mode where the layout of the grid items is such that
+- a thumbnail is displayed (2)
+- The video metadata is displayed above or below the thumbnail (3)
+
+[5/5] List View layout: After executing a search, the application can be switched to a list view mode where the layout of the list items is such that
+- A thumbnail is displayed (2)
+- The video metadata displayed to the left or to the right of the thumbnail (3)
+
+[15/15] Presentation and resizing:
+- The application responds and adjusts to window resizing. In list view, the application shows a vertical scrollbar, as needed, to show a minimum of 25 video items in one column (5)
+- In grid view, the application should increase and decrease the number of columns to show at least one column at the minimum width and grow to three or more columns as the window is resized (8)
+- In either views, resizing the window width should make the contents of the list truncate (e.g. "video title...") or wrap to the next line, but nothing should be "clipped" at any point (2)
+
+Functional Requirements (50%)
+-----------------------------
+[10/10] Search and API functionality:
+- The search field in the toolbar can be used to to input a query, and clicking on the search icon (or pressing Enter) begins search (2)
+- the application uses the YouTube API to show video elements matching the query:
+-- a video title is displayed (2)
+-- a relative date (e.g. "2 years ago") is displayed (3)
+- The corresponding video thumbnail image is displayed (3)
+
+[0/10] Asynchronous data loading: while loading the search results, the application should appear responsive:
+- You can resize or scroll the window while data is loading (5)
+- You can toggle the grid/list view while data is loading (5)
+
+The application is not functional while the search results are being loaded.
+
+[13/15] Rating and filter:
+- Every video item shows a rating bar where you can set a rating from one to five stars (3/3)
+- Search results displayed have no rating by default (2/2)
+- Switching views preserves the ratings (2/2)
+- Setting a rating filter immediately updates the view to show videos rated with a minimum of that rating (e.g. a 3-star filter shows all 3-, 4-, and 5-star videos) (3/3)
+- There is an obvious way to clear the rating on the video or the filter (e.g. clicking on the same star, a "x" button, or something specified in the README) (0/2)
+
+In order to clear the ratings one has to click on the first star. Which is confusing because that action is expected to change the rating to 1 star.
+
+- A new search (even on the same query) clears all the video ratings (3/3)
+
+[13/15] Saving and loading (serialization):
+- Clicking on the save button shows a file explorer dialog to choose a file name and location (2/2)
+- The file is saved with the chosen name and location in any (binary or text) format (3/3)
+- Clicking on the load button shows a file chooser dialog where you can choose the previously saved file (2/2)
+- Upon loading the file, the application updates the view (without making a network call) with the saved search results including:
+-- video metadata (1/1)
+-- thumbnail (1/1)
+-- specified rating (1/1)
+- If search results exist when loading, the system will prompt the user to save before loading over the search results (3/3).
+- A custom file name extension is used for loading and saving (i.e. appears in all dialogs) (0/2)
+
+The saving functionality is expected to add the required file extension to the file name (of the type: SER Binary file). However, this is not the case. In order to load the saved file one needs to choose “All Files” for the file format to be able to open the saved file.
+
+Programme Architecture (5%)
+----------------------------
+[5/5] Models and Views/Controllers exist (2) are bound using the observer pattern (either the Java classes/interfaces, or custom classes) (3)
+
+Total: 86
